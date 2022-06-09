@@ -55,6 +55,13 @@ void send_event()
 {
   HTTPClient http;
   http.begin(client, base_url);
-  http.GET();
+  int responseCode = http.GET();
+  if (responseCode < 0) {
+    Serial.println(http.errorToString(responseCode));
+    http.writeToStream(&Serial);
+  } else {
+    http.writeToStream(&Serial);
+    Serial.println();
+  }
   http.end();
 }
